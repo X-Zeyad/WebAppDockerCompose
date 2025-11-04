@@ -1,0 +1,29 @@
+# containers
+services:
+    webapp:
+        build: .
+        ports:
+            - "8080:8080"
+        networks:
+            - net1
+        depends_on:
+            - db
+        environment:
+            - connectionString=Application=server=sqlserver;database=mydb;user=sa;password=StrongPass!123;trustServerCertificate=true;
+    db:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        networks:
+            - net1
+        volumes:
+            - dbdata:/var/opt/mssql
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=StrongPass!123
+        
+# networks
+networks:
+    net1:
+
+# volumes
+volumes:
+    dbdata:
