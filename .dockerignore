@@ -1,0 +1,11 @@
+# .dockerignore
+bin/
+obj/
+.git/
+.vscode/
+*.user
+*.db
+*.log
+Dockerfile
+docker-compose.yml
+.env

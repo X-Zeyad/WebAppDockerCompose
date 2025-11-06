@@ -2,6 +2,8 @@
 services:
     webapp:
         build: .
+        tags: 
+            - webapp:1.0
         ports:
             - "8080:8080"
         networks:
@@ -9,7 +11,7 @@ services:
         depends_on:
             - db
         environment:
-            - connectionString=Application=server=sqlserver;database=mydb;user=sa;password=StrongPass!123;trustServerCertificate=true;
+            - connectionString=${CONNECTION_STRING}
     db:
         image: mcr.microsoft.com/mssql/server:2019-latest
         networks:
@@ -18,7 +20,7 @@ services:
             - dbdata:/var/opt/mssql
         environment:
             - ACCEPT_EULA=Y
-            - MSSQL_SA_PASSWORD=StrongPass!123
+            - MSSQL_SA_PASSWORD=${DB_PASSWORD}
         
 # networks
 networks:

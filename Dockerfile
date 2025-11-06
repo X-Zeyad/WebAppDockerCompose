@@ -13,5 +13,11 @@ RUN dotnet publish -c Release -o /app/publish
 # ================================
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime	
 WORKDIR /app
-COPY --from=build /app/publish .
+# Create a non-root user and set ownership
+RUN adduser --disabled-password --home /app appuser
+
+# Switch to non-root user
+USER appuser
+
+COPY --from=build /app/publish ./
 ENTRYPOINT ["dotnet", "WebAppDockerCompose.dll"]
